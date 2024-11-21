@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GHangDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+//N?u ?? chu?i k?t n?i ? class dbcontext thì add service nh? z?
+//builder.Services.AddDbContext<GHangDbContext>(); 
 //khai báo d?ch v? session
 builder.Services.AddSession(option =>
 {

@@ -48,7 +48,7 @@ namespace Demo_GioHangSD19316.Controllers
                 //tạo mới 1 account
                 _db.Accounts.Add(acc);
                 //khi tạo 1 acc đồng thời sẽ tạo 1 giỏ hàng
-                GioHang gioHang = new GioHang()
+                GioHang gioHang = new GioHang()  
                 {
                     UserName = acc.UserName,
                     AccountId = acc.Id
@@ -89,7 +89,7 @@ namespace Demo_GioHangSD19316.Controllers
             {
                 //lưu dữ liệu login vào sesion vs key là cun
                 HttpContext.Session.SetString("cun", userName);
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction("Index", "SanPham");
             }
             return View();
         }

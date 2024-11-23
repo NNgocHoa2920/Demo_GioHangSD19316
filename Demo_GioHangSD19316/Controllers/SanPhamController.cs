@@ -1,6 +1,7 @@
 ﻿using Demo_GioHangSD19316.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
+
 
 namespace Demo_GioHangSD19316.Controllers
 {
@@ -12,22 +13,49 @@ namespace Demo_GioHangSD19316.Controllers
         {
             _db = db;   
         }
-        public IActionResult Index()
+        public IActionResult Index(string name, int page=3, int pageSize=2)
         {
             //lấy giá trị session có tên là ussername
             var session = HttpContext.Session.GetString("cun");
-            if(session == null)
+            if (session == null)
             {
-                ViewData["mess"] = "Chưa đăng nhập cháu ơi";
-                return RedirectToAction("Login","Account");
+                TempData["mess"] = "Chưa đăng nhập cháu ơi";
+                return RedirectToAction("Login", "Account");
             }
             else
             {
                 ViewData["mess1"] = $"Mời {session} xem sản phẩm";
-                var spList = _db.SanPhams.ToList();
+                //var spList = _db.SanPhams.ToList(); // lay toan bo danh sach
 
-                return View(spList);
+                //return View(spList);
             }
+            var lst =_db.SanPhams.ToPagedList(page,pageSize);
+
+            //CHUC NANG TIM KIEMM
+            
+            //check xem 
+            //CHECK NAME COS DC NHAP HAY K
+            if(string.IsNullOrEmpty(name))
+            {
+                return View(lst);
+            }
+            else
+            {
+                var search = _db.SanPhams
+                    .Where(x => x.SanPhamName.ToLower().Contains(name.ToLower()))
+                    .ToList();
+                if(search.Count ==0)
+                {
+                    return View(lst) ;
+
+                }
+                else
+                {
+                    return View(search);
+                }
+            }
+           
+
              
         }
         public IActionResult Create()  //Tạ ra view creaate

@@ -2,6 +2,7 @@
 
     var mess = TempData["Status"];
     var mess1 = ViewData["mess"];
+    var a = TempData["mess"];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,7 @@
 <body>
     <div class="login-container">       
         <h5 class="btn btn-info disabled">@mess</h5>
+        <h5>@a</h5>
         <h2>Đăng nhập</h2>
         <form asp-action="Login" method="POST">
             <label for="userName">Tên đăng nhập:</label>
